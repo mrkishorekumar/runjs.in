@@ -1,47 +1,57 @@
-import React, { useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
+import { navbarURLList } from '../../utils/const';
+import { inter } from '../../styles/font';
 
-const Navbar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
+export default function Navbar() {
   return (
-    <nav className="fixed top-0 left-0 z-50 w-full bg-white shadow-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <div className="text-xl font-bold text-gray-800">Logo</div>
+    <header className={'antialiased ' + inter.className}>
+      <div className="flex flex-wrap items-center px-6 py-2 lg:px-16 lg:py-0">
+        <div className="flex flex-1 items-center justify-between">
+          <Link href="/dashboard">
+            <Image
+              src={'/runjs.webp'}
+              alt="RunJS.in Logo"
+              height={30}
+              width={30}
+            />
+          </Link>
+        </div>
 
-        {/* Hamburger Icon */}
-        <button
-          className="flex h-5 w-6 flex-col justify-between focus:outline-none md:hidden"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label="Toggle Menu"
-        >
-          <span className="h-0.5 w-full transform bg-gray-800 transition-transform duration-300" />
-          <span className="h-0.5 w-full bg-gray-800 transition-opacity duration-300" />
-          <span className="h-0.5 w-full transform bg-gray-800 transition-transform duration-300" />
-        </button>
+        <label htmlFor="menu-toggle" className="pointer-cursor block lg:hidden">
+          <svg
+            className="fill-current text-gray-900"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+          >
+            <title>menu</title>
+            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+          </svg>
+        </label>
+        <input className="hidden" type="checkbox" id="menu-toggle" />
 
-        {/* Nav Links */}
-        <ul
-          className={`absolute top-full left-0 flex w-full flex-col items-center gap-4 bg-white py-6 shadow-md transition-all duration-300 ease-in-out md:static md:w-auto md:flex-row md:gap-8 md:bg-transparent md:py-0 md:shadow-none ${
-            isOpen
-              ? 'pointer-events-auto max-h-[500px] opacity-100'
-              : 'pointer-events-none max-h-0 opacity-0'
-          }`}
-          style={{ transitionProperty: 'opacity, max-height' }}
+        <div
+          className="hidden w-full lg:flex lg:w-auto lg:items-center"
+          id="menu"
         >
-          {['Home', 'About', 'Contact'].map((text) => (
-            <li key={text}>
-              <a
-                href="#"
-                className="text-base font-medium text-gray-800 transition-colors duration-200 hover:text-blue-600"
-              >
-                {text}
-              </a>
-            </li>
-          ))}
-        </ul>
+          <nav className="items-center justify-between pt-4 text-base text-black lg:flex lg:pt-0">
+            {navbarURLList.map((list, index) => {
+              return (
+                <Link
+                  className="block border-b-2 border-transparent px-0 py-3 font-semibold hover:border-black lg:p-4"
+                  href={list.link}
+                  key={index}
+                >
+                  {list.label}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
       </div>
-    </nav>
+    </header>
   );
-};
-
-export default Navbar;
+}

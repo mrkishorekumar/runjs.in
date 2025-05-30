@@ -4,6 +4,19 @@
 
 @import 'tailwindcss';
 
+#menu-toggle:checked + #menu {
+  display: block;
+}
+
+.dot {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
 .dot-mask {
   position: absolute;
   inset: 0;
